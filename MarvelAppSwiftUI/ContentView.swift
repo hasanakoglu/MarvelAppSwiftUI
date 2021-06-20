@@ -1,16 +1,20 @@
-//
-//  ContentView.swift
-//  MarvelAppSwiftUI
-//
-//  Created by Hasan Akoglu on 20/06/2021.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject private var viewModel = ContentViewModel()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            List(viewModel.characters, id: \.id) { character in
+                NavigationLink(destination: DetailView(character: character)) {
+                    HStack {
+                        ImageLoader(url: character.imageURL)
+                            .frame(width: 50, height: 50)
+                        Text(character.name)
+                    }
+                }
+            }.navigationBarTitle("Marvel")
+        }
     }
 }
 
